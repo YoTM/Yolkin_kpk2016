@@ -9,11 +9,15 @@ t.speed(10)
 def main():
         v = int(0)
         # Формируем список из ф-й рисования цифр
-        """K = [d_zero(v)], d_one(v), d_two(v),
+        """
+        Здесь закомментированы попытки реализовать перебор цифр числа через
+        список ф-й
+        K = [d_zero(v)], d_one(v), d_two(v),
              d_three(v), d_four(v), d_five(v),
-             d_six(v), d_seven(v), d_eight(v), d_nine(v)]"""
+             d_six(v), d_seven(v), d_eight(v), d_nine(v)]
         K = list(d_zero(v), d_one(v), d_two(v),d_three(v), d_four(v), d_five(v),\
                  d_six(v), d_seven(v), d_eight(v), d_nine(v))
+        """
         # Запрашиваем число
         x = int(input('Введите число: '))
         # Запрашиваем высоту цифр
@@ -24,11 +28,31 @@ def main():
 
         t.penup()
         t.backward(300)
-        for i in range(len(C)):
-                K[C[i]]
-        """
+
         # Рисуем число
-        for i in range(len(C)):
+        write_digit(C, v)
+
+        #t.hideturtle()
+
+
+
+def to_digits(n):
+        """ ф-я выбирает цифры числа справа налево и записывает в список"""
+        S=[]
+        while n != 0:
+                S = S+[n%10]
+                n = n // 10
+        return S
+
+def write_digit(C, v):
+    """
+    Рисуем число грубым перебором условий по цифрам
+    Ниже, попытка сделать перебор через списки/кортежи
+    for i in range(len(C)):
+                K[C[i]]
+    """
+
+    for i in range(len(C)):
                 if C[i] == 0:
                         d_zero(v)
                 elif C[i] == 1:
@@ -49,17 +73,7 @@ def main():
                         d_eight(v)
                 elif C[i] == 9:
                         d_nine(v)
-                t.forward(10) # отступ """
-
-        #t.hideturtle()
-
-def to_digits(n):
-        """ ф-я выбирает цифры числа справа налево и записывает в список"""
-        S=[]
-        while n != 0:
-                S = S+[n%10]
-                n = n // 10
-        return S
+                t.forward(10)       # отступ
 
 def d_zero(length):
     """ Рисует цифру 0 с высотой length
