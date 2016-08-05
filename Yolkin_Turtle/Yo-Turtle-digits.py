@@ -7,31 +7,25 @@ t.shapesize(2)
 t.speed(10)
 
 def main():
-        v = int(0)
-        # Формируем список из ф-й рисования цифр
-        """
-        Здесь закомментированы попытки реализовать перебор цифр числа через
-        список ф-й
-        K = [d_zero(v)], d_one(v), d_two(v),
-             d_three(v), d_four(v), d_five(v),
-             d_six(v), d_seven(v), d_eight(v), d_nine(v)]
-        K = list(d_zero(v), d_one(v), d_two(v),d_three(v), d_four(v), d_five(v),\
-                 d_six(v), d_seven(v), d_eight(v), d_nine(v))
-        """
         # Запрашиваем число
         x = int(input('Введите число: '))
+
         # Запрашиваем высоту цифр
-        v = int(input('Введите высоту цифр: '))
+        v_digit = int(input('Введите высоту цифр: '))
+        length = v_digit
+
         # заносим цифры числа в список
         C = to_digits(x)
         C.reverse()
 
+        # Выставляем черепашку слевого края листа
         t.penup()
         t.backward(300)
 
         # Рисуем число
-        write_digit(C, v)
-        # прячем черепаху
+        write_digit(C, v_digit)
+
+        # Прячем черепашку
         t.hideturtle()
 
 def to_digits(n):
@@ -44,40 +38,32 @@ def to_digits(n):
 
 def write_digit(C, v):
     """
-    Рисуем число грубым перебором условий по цифрам
-    Ниже, попытка сделать перебор через списки/кортежи
-    for i in range(len(C)):
-                K[C[i]]
+    Рисуем число с использованием индекса списка цифр числа
+    и введённой высоты цифр
     """
 
-    for i in range(len(C)):
-                if C[i] == 0:
-                        d_zero(v)
-                elif C[i] == 1:
-                        d_one(v)
-                elif C[i] == 2:
-                        d_two(v)
-                elif C[i] == 3:
-                        d_three(v)
-                elif C[i] == 4:
-                        d_four(v)
-                elif C[i] == 5:
-                        d_five(v)
-                elif C[i] == 6:
-                        d_six(v)
-                elif C[i] == 7:
-                        d_seven(v)
-                elif C[i] == 8:
-                        d_eight(v)
-                elif C[i] == 9:
-                        d_nine(v)
-                t.forward(10)       # отступ
+    # Формируем список из ф-й рисования цифр
+    list_digits = {
+                0 : d_zero,
+                1 : d_one,
+                2 : d_two,
+                3 : d_three,
+                4 : d_four,
+                5 : d_five,
+                6 : d_six,
+                7 : d_seven,
+                8 : d_eight,
+                9 : d_nine
+                }
+    # Для всех цифр числа выполняем ф-ю рисования цифры по её индексу
+    for i in range(0,len(C)):
+            list_digits[C[i]](v)        # обращаемся к словарю ф-ий
+            t.forward(10)               # отступ между цифрами
 
 def d_zero(length):
     """ Рисует цифру 0 с высотой length
         слева от направления черепахи
         контракт:
-            если не задана высота цифры, то выходим из ф-ции
             черепаха возвращается в исходную точку
             и исходную ориентацию, а затем выставляется
             в правый нижний угол цифры
@@ -102,6 +88,7 @@ def d_zero(length):
     for length, degree in zip(A, B):
         t.backward(length)
         t.right(degree)
+
     t.penup()
     t.forward(L1)
 
@@ -370,7 +357,7 @@ def d_nine(length):
 # Основная программа
 main()
 
-""" Перечень команд чертёжника-черепашки:"""
+""" СКИ Черепашка"""
 # t.left(30)
 # t.rigth(30)
 # t.forward(200)
